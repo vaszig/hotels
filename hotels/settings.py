@@ -119,3 +119,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TOOLBAR_CALLBACK": lambda request: True,
 }
+
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]

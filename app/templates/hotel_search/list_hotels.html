@@ -1,0 +1,27 @@
+{% extends "hotel_search/base.html" %}
+{% block content %} 
+<h3>Search for a city</h3>
+<div class="row">
+	<div class="col-6 align-left">
+		<form class="form-inline" id="search-form" autocomplete="off">
+			<i id="search-icon" class="fas fa-search" aria-hidden="true"></i>
+			<input id="search-input" class="form-control form-control-sm ml-3 w-75" type="text" placeholder="Search" aria-label="Search">
+		</form>
+	</div>
+
+	<div id="results-box" class="col-6">
+		{% if cities %}
+			{% for city in cities %}
+				<p><b>City: </b>{{ city.name }}</p>
+				<ul>
+				{% for hotel in city.hotel_set.all %}
+					<li>{{ hotel.name }}</li>
+				{% endfor %}
+				</ul>
+			{% endfor %}
+			{% else %}
+				No cities yet.
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
