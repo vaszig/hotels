@@ -56,17 +56,17 @@ def update_cities(csv_cities):
 def update_hotels(csv_hotels):
     """Updates db with the new or updated hotels."""
     csv_hotels = ({'city_id':c_id, 'hotel_id':h_id, 'name':name} for c_id, h_id, name in csv_hotels)
+    db_cities = {city.id: city for city in City.objects.all()}
     db_hotels = {id_:name for id_, name in Hotel.objects.values_list('id', 'name')}
     
     hotels_to_create = []
     hotels_to_update = []
     
     for hotel in csv_hotels:
-        try:
-            city_obj = City.objects.get(id=hotel['city_id'])
-        except ObjectDoesNotExist:
+        city_obj = db_cities.get(hotel['city_id'])
+        if not city_obj:
             continue
-
+        
         if hotel['hotel_id'] not in db_hotels:
             hotels_to_create.append(
                 Hotel(id=hotel['hotel_id'], city=city_obj, name=hotel['name'])
